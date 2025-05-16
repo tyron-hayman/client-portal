@@ -1,6 +1,7 @@
 import { createClient } from '@/utils/supabase/server'
 import DashboardHeader from '@/components/DashboardHeader'
 import DashboardBody from '@/components/DashboardBody'
+import { redirect } from 'next/navigation'
 
 export default async function Dashboard() {
   const supabase = await createClient()
@@ -9,17 +10,19 @@ export default async function Dashboard() {
     data: { user },
   } = await supabase.auth.getUser()
 
+  if ( !user ) {
+    redirect('/login')
+  }
+
   const { data } = await supabase
   .from('users')
   .select()
   .eq('email', user?.email)
 
-  console.log(data)
-
   return (
     <div className="w-full">
         {data ? <DashboardHeader auth={data[0].name} /> : null }
-        <DashboardBody auth={user} />
+        {data ? <DashboardBody auth={user} data={data[0]} /> : null }
     </div>
   )
 }

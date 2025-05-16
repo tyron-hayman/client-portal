@@ -38,7 +38,7 @@ export default function LoginPage() {
     setFormLoad(true);
     const loginResult = await login(formInfo);
     if ( loginResult.status == "success" ) {
-      redirect('/account');
+      redirect('/dashboard');
     } else {
       toast(loginResult.message)
       setFormLoad(false)
