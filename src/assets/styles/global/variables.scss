@@ -1,0 +1,14 @@
+// Branding
+$white: #ffffff;
+$black: #000000;
+$accent: oklch(54.1% 0.281 293.009);
+
+// Variabls
+$browsers: '', '-moz', '-webkit', '-o';
+
+// Mixins
+@mixin borderRadius($radius) {
+  @each $browser in $browsers {
+    #{$browser}-border-radius: $radius;
+  }
+}
