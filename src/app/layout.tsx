@@ -3,6 +3,7 @@ import { Urbanist, Inter } from "next/font/google";
 import "./globals.css";
 import "@/assets/styles/global/main.css"
 import { Toaster } from "@/components/ui/sonner"
+import { ThemeProvider } from "@/components/theme-provider"
 
 const urbanist = Urbanist({
   variable: "--font-urbanist-sans",
@@ -26,11 +27,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${urbanist.variable} ${inter.variable} antialiased dark`}
+        className={`${urbanist.variable} ${inter.variable} antialiased`}
       >
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
         {children}
+        </ThemeProvider>
         <Toaster />
       </body>
     </html>

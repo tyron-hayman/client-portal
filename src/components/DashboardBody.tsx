@@ -8,12 +8,13 @@ import { toast } from "sonner";
 import { client } from "@/utils/sanity/client"
 import GlobalLoader from "./GlobalLoader";
 
+
 export default function DashboardBody({ auth } : { auth : User | null }) {
     const [pageData, setPageData] = useState<Array<{ title : string | null, desc : string | null}>>([{
         title : null,
         desc : null
     }])
-    // const [projects, setProjects] = useState<Array<[]> | null>(null)
+    const [projects, setProjects] = useState<Array<[]> | null>(null)
 
     useEffect(() => {
         if ( !auth ) {
@@ -32,9 +33,7 @@ export default function DashboardBody({ auth } : { auth : User | null }) {
             .select()
             .contains('users', [userID])
             if ( data?.length ) {
-                toast("Projects!")
-            } else {
-                toast("There are no projects.")
+                setProjects(data)
             }
         } catch {
             toast("Could not get projects due to an internal error.")
@@ -56,15 +55,23 @@ export default function DashboardBody({ auth } : { auth : User | null }) {
         {pageData[0].title && pageData[0].desc ?
         <div className="container my-40">
             <motion.div className="w-full">
-                <h2 className="text-2xl text-white font-black uppercase">
+                <h2 className="text-2xl text-[var(--foreground)] font-black uppercase m-0 p-0">
                     {pageData[0].title}
                 </h2>
-                <p className="text-4xl text-neutral-300 leading-relaxed">
+                <p className="text-4xl text-[var(--foreground)]/70 leading-relaxed">
                     {pageData[0].desc}
                 </p>
             </motion.div>
             <div className="w-full grid grid-cols-3 gap-4 my-10">
-                <div className="border-1 border-white/20 border-solid rounded-3xl p-20"></div>
+               {projects ?
+                    <div className="col-span-3">
+                        <p className="text-text-[var(--foreground)] text-lg">projects</p>
+                    </div>
+                :
+                    <div className="col-span-3">
+                        <p className="text-text-[var(--foreground)] text-lg">You have not added any projects</p>
+                    </div>
+                }
             </div>
         </div>
         : <GlobalLoader />}
