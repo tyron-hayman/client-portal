@@ -5,7 +5,7 @@ import { type User } from "@supabase/supabase-js";
 import supabase from "@/utils/supabase/client";
 import { toast } from "sonner";
 import { client } from "@/utils/sanity/client"
-import GlobalLoader from "./GlobalLoader";
+import GlobalLoader from "@/components/GlobalLoader";
 
 
 export default function DashboardBodyAdmin({ auth } : { auth : User | null }) {
@@ -19,6 +19,8 @@ export default function DashboardBodyAdmin({ auth } : { auth : User | null }) {
         if ( auth ) {
             getProjects(auth);
             getPageData();
+        } else {
+            toast("You do not have access to this page.")
         }
     },[auth])
 
@@ -71,7 +73,7 @@ export default function DashboardBodyAdmin({ auth } : { auth : User | null }) {
                 }
             </div>
         </div>
-        : <GlobalLoader />}
+        : <div className="w-full h-screen min-h-screen flex items-center justify-center"><GlobalLoader /></div>}
       </div>
     );
   }

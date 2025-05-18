@@ -1,12 +1,13 @@
 'use client'
 import Link from 'next/link'
 import { LogOut } from 'lucide-react';
-import { redirect } from 'next/navigation';
+import { redirect, usePathname } from 'next/navigation';
 import { toast } from 'sonner';
 import { logOut } from '@/app/login/actions';
 
-export default function DashboardHeader({ auth } : { auth? : string | null | undefined }) {
-    const linkClass : string = 'text-[var(--foreground)] p-2 ml-4';
+export default function LoggedInHeader({ auth } : { auth? : string | null | undefined }) {
+    const pathname = usePathname()
+    const linkClass : string = 'py-2 px-4 ml-4 rounded-full';
     const links : Array<{ id : string, title : string, link : string }> = [
         { id : 'Dashboard', title : 'Dashboard', link : '/dashboard'},
         { id : 'Projects', title : 'Projects', link : '/projects'},
@@ -33,7 +34,7 @@ export default function DashboardHeader({ auth } : { auth? : string | null | und
                 <ul className="flex items-center">
                     {links.map((item : { id : string, title : string, link : string }) => {
                         return(
-                            <li className={`${linkClass}`} key={item.id}><Link href={item.link}>{item.title}</Link></li>
+                            <li key={item.id}><Link href={item.link} className={`${linkClass} ${pathname == item.link ? 'bg-[var(--foreground)] text-[var(--background)]' : 'bg-[var(--background)] text-[var(--foreground)]'}`}>{item.title}</Link></li>
                         )
                     })}
                     <li className={`${linkClass}`}><Link href="#" onClick={(e) => handleLogOut(e)}><LogOut /></Link></li>
