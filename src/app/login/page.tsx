@@ -8,6 +8,7 @@ import GlobalLoader from "@/components/GlobalLoader";
 import { toast } from "sonner";
 import { LoaderCircle } from 'lucide-react';
 import { redirect } from "next/navigation";
+import { CheckUser } from "@/app/auth/actions";
 
 export default function LoginPage() {
   const [formLoad, setFormLoad] = useState<boolean>(false);
@@ -30,8 +31,23 @@ export default function LoginPage() {
   };
 
   useEffect(() => {
-    getPagetData();
+    isLoggedIn();
   }, [])
+
+  const isLoggedIn = async () => {
+    let userCheck;
+    try {
+      userCheck = await CheckUser();
+    } catch(error) {
+      console.log(error)
+    } finally {
+      if ( userCheck ) {
+        redirect('/dashboard');
+      } else {
+        getPagetData();
+      }
+    }
+  }
 
   const handleLogin = async (e : React.MouseEvent<HTMLButtonElement, MouseEvent>) : Promise<void> => {
     e.preventDefault();
