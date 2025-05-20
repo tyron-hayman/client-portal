@@ -81,7 +81,7 @@ export default function LoginPage() {
         <h1 className="font-[family-name:var(--font-urbanist-sans)] text-5xl font-black uppercase mb-5">
           {pageData.title}
         </h1>
-        <p className="text-white text-lg leading-relaxed">{pageData.Content}</p>
+        <p className="text-[var(--foreground)] text-lg leading-relaxed">{pageData.Content}</p>
         <form>
           <input
             type="text"
@@ -98,7 +98,7 @@ export default function LoginPage() {
             onChange={(e) => setFormInfo([{ ...formInfo[0], password: e.target.value }])}
           />
           <div className="mt-10">
-            <button type="submit" className="formButtons bg-neutral-800 hover:bg-neutral-900" onClick={(e) => handleLogin(e)}>
+            <button type="submit" className="formButtons bg-[var(--foreground)] text-[var(--background)] hover:bg-[var(--background)] hover:text-[var(--foreground)] border-[var(--foreground)] border-2 border-solid" onClick={(e) => handleLogin(e)}>
               {formLoad ? <LoaderCircle className="animate-spin" color="#c10007" /> : 'Login'}
             </button>
           </div>

@@ -1,6 +1,7 @@
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import LoggedInHeader from '@/components/loggedInHeader'
+import ProjectTable from '@/components/projects/ProjectTable'
 
 export default async function Dashboard() {
   const supabase = await createClient()
@@ -20,7 +21,12 @@ export default async function Dashboard() {
 
   return (
     <div className="w-full">
-        {data ? <LoggedInHeader auth={data[0].name} /> : null }
+        {data ?
+        <>
+          <LoggedInHeader auth={data[0].name} /> 
+          <ProjectTable userdata={data[0]} />
+        </>
+        : null }
     </div>
   )
 }

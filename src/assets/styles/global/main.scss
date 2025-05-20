@@ -60,8 +60,4 @@ body {
     @include v.borderRadius(15px);
     padding: 0.5rem 2.5rem;
     cursor: pointer;
-    &:hover {
-        background: v.$black;
-        color: v.$white;
-    }
 }
